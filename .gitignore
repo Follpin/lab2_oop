@@ -1,0 +1,21 @@
+## Build and binary directories
+bin/
+obj/
+[Bb]in/
+[Oo]bj/
+TestResults/
+
+## Visual Studio / Rider / VS Code cache
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## OS generated
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/

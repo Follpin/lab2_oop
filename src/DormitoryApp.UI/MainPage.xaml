@@ -1,0 +1,361 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:DormitoryApp.Core.Models;assembly=DormitoryApp.Core"
+             x:Class="DormitoryApp.UI.MainPage"
+             Title="Гуртожиток"
+             BackgroundColor="#F5F5F5">
+
+    <ContentPage.MenuBarItems>
+        <MenuBarItem Text="Файл">
+            <MenuFlyoutItem Text="Завантажити XML" Clicked="OnLoadXmlClicked" />
+            <MenuFlyoutItem Text="Обрати XSL" Clicked="OnLoadXslClicked" />
+            <MenuFlyoutItem Text="Трансформувати в HTML" Clicked="OnTransformToHtmlClicked" />
+            <MenuFlyoutSeparator />
+            <MenuFlyoutItem Text="Вихід" Clicked="OnExitClicked" />
+        </MenuBarItem>
+        <MenuBarItem Text="Пошук">
+            <MenuFlyoutItem Text="Пошук" Clicked="OnSearchClicked" />
+            <MenuFlyoutItem Text="Очистити" Clicked="OnClearClicked" />
+        </MenuBarItem>
+        <MenuBarItem Text="Довідка">
+            <MenuFlyoutItem Text="Про програму" Clicked="OnHelpClicked" />
+        </MenuBarItem>
+    </ContentPage.MenuBarItems>
+
+    <Grid RowDefinitions="Auto, *">
+
+        <!-- Top toolbar -->
+        <Grid Grid.Row="0"
+              BackgroundColor="#FFFFFF"
+              Padding="16,10"
+              ColumnDefinitions="*, Auto, Auto"
+              ColumnSpacing="8">
+            <Label Grid.Column="0"
+                   Text="Гуртожиток - робота з XML"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   TextColor="#222222"
+                   VerticalOptions="Center" />
+
+            <Button Grid.Column="1"
+                    Text="Про програму"
+                    BackgroundColor="#EDEDED"
+                    TextColor="#222222"
+                    BorderColor="#CCCCCC"
+                    BorderWidth="1"
+                    FontSize="12"
+                    CornerRadius="4"
+                    Padding="12,6"
+                    HeightRequest="34"
+                    Clicked="OnHelpClicked" />
+
+            <Button Grid.Column="2"
+                    Text="Вихід"
+                    BackgroundColor="#EDEDED"
+                    TextColor="#222222"
+                    BorderColor="#CCCCCC"
+                    BorderWidth="1"
+                    FontSize="12"
+                    CornerRadius="4"
+                    Padding="12,6"
+                    HeightRequest="34"
+                    Clicked="OnExitClicked" />
+        </Grid>
+
+        <BoxView Grid.Row="0"
+                 HeightRequest="1"
+                 Color="#DCDCDC"
+                 VerticalOptions="End" />
+
+        <!-- Main content area -->
+        <Grid Grid.Row="1"
+              ColumnDefinitions="390, *"
+              Padding="12"
+              ColumnSpacing="12">
+
+            <!-- Left panel: files, parser, filters -->
+            <ScrollView Grid.Column="0">
+                <VerticalStackLayout Spacing="10">
+
+                    <!-- Files -->
+                    <Border BackgroundColor="#FFFFFF"
+                            Stroke="#D8D8D8"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 4"
+                            Padding="12">
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="Файли"
+                                   FontSize="14"
+                                   FontAttributes="Bold"
+                                   TextColor="#222222" />
+
+                            <Grid ColumnDefinitions="*, Auto" ColumnSpacing="8">
+                                <Label x:Name="XmlFileLabel"
+                                       Text="XML-файл не обрано"
+                                       FontSize="12"
+                                       TextColor="#555555"
+                                       VerticalOptions="Center"
+                                       LineBreakMode="TailTruncation" />
+                                <Button Grid.Column="1"
+                                        Text="Завантажити XML"
+                                        BackgroundColor="#2B579A"
+                                        TextColor="#FFFFFF"
+                                        FontSize="12"
+                                        CornerRadius="4"
+                                        Padding="12,6"
+                                        HeightRequest="34"
+                                        Clicked="OnLoadXmlClicked" />
+                            </Grid>
+
+                            <Grid ColumnDefinitions="*, Auto" ColumnSpacing="8">
+                                <Label x:Name="XslFileLabel"
+                                       Text="XSL: data/dormitory.xsl"
+                                       FontSize="12"
+                                       TextColor="#555555"
+                                       VerticalOptions="Center"
+                                       LineBreakMode="TailTruncation" />
+                                <Button Grid.Column="1"
+                                        Text="Обрати XSL"
+                                        BackgroundColor="#EDEDED"
+                                        TextColor="#222222"
+                                        BorderColor="#CCCCCC"
+                                        BorderWidth="1"
+                                        FontSize="12"
+                                        CornerRadius="4"
+                                        Padding="12,6"
+                                        HeightRequest="34"
+                                        Clicked="OnLoadXslClicked" />
+                            </Grid>
+
+                            <Button Text="Трансформувати в HTML"
+                                    BackgroundColor="#EDEDED"
+                                    TextColor="#222222"
+                                    BorderColor="#CCCCCC"
+                                    BorderWidth="1"
+                                    FontSize="12"
+                                    CornerRadius="4"
+                                    HeightRequest="34"
+                                    Clicked="OnTransformToHtmlClicked" />
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Analysis method -->
+                    <Border BackgroundColor="#FFFFFF"
+                            Stroke="#D8D8D8"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 4"
+                            Padding="12">
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Метод аналізу XML"
+                                   FontSize="14"
+                                   FontAttributes="Bold"
+                                   TextColor="#222222" />
+                            <Picker x:Name="StrategyPicker"
+                                    Title="Оберіть метод"
+                                    FontSize="13"
+                                    TextColor="#222222" />
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Search filters -->
+                    <Border BackgroundColor="#FFFFFF"
+                            Stroke="#D8D8D8"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 4"
+                            Padding="12">
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="Фільтри"
+                                   FontSize="14"
+                                   FontAttributes="Bold"
+                                   TextColor="#222222" />
+
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="П.І.П. студента" FontSize="11" TextColor="#444444" />
+                                <Entry x:Name="KeywordEntry" Placeholder="Введіть ім'я..." FontSize="12" />
+                            </VerticalStackLayout>
+
+                            <Grid ColumnDefinitions="*, *" ColumnSpacing="8">
+                                <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                    <Label Text="Факультет" FontSize="11" TextColor="#444444" />
+                                    <Picker x:Name="FacultyPicker" Title="Усі" FontSize="12" />
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                    <Label Text="Кафедра" FontSize="11" TextColor="#444444" />
+                                    <Picker x:Name="DepartmentPicker" Title="Усі" FontSize="12" />
+                                </VerticalStackLayout>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="*, *" ColumnSpacing="8">
+                                <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                    <Label Text="Курс" FontSize="11" TextColor="#444444" />
+                                    <Picker x:Name="CoursePicker" Title="Усі" FontSize="12" />
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                    <Label Text="Пільга" FontSize="11" TextColor="#444444" />
+                                    <Picker x:Name="PrivilegePicker" Title="Усі" FontSize="12" />
+                                </VerticalStackLayout>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="*, *" ColumnSpacing="8">
+                                <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                    <Label Text="Корпус" FontSize="11" TextColor="#444444" />
+                                    <Picker x:Name="BuildingPicker" Title="Усі" FontSize="12" />
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                    <Label Text="Кімната" FontSize="11" TextColor="#444444" />
+                                    <Picker x:Name="RoomNumberPicker" Title="Усі" FontSize="12" />
+                                </VerticalStackLayout>
+                            </Grid>
+
+                            <BoxView HeightRequest="1" Color="#E5E5E5" Margin="0,2" />
+
+                            <Label Text="Додатковий атрибут" FontSize="11" TextColor="#444444" />
+                            <Grid ColumnDefinitions="*, *" ColumnSpacing="8">
+                                <Picker Grid.Column="0" x:Name="CustomAttributePicker" Title="Атрибут" FontSize="12" />
+                                <Entry Grid.Column="1" x:Name="CustomAttributeValueEntry" Placeholder="Значення..." FontSize="12" />
+                            </Grid>
+
+                            <Grid ColumnDefinitions="*, *" ColumnSpacing="8" Margin="0,4,0,0">
+                                <Button Grid.Column="0"
+                                        Text="Пошук"
+                                        BackgroundColor="#2B579A"
+                                        TextColor="#FFFFFF"
+                                        FontSize="13"
+                                        CornerRadius="4"
+                                        HeightRequest="36"
+                                        Clicked="OnSearchClicked" />
+                                <Button Grid.Column="1"
+                                        Text="Очистити"
+                                        BackgroundColor="#EDEDED"
+                                        TextColor="#222222"
+                                        BorderColor="#CCCCCC"
+                                        BorderWidth="1"
+                                        FontSize="13"
+                                        CornerRadius="4"
+                                        HeightRequest="36"
+                                        Clicked="OnClearClicked" />
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <!-- Right panel: search results -->
+            <Border Grid.Column="1"
+                    BackgroundColor="#FFFFFF"
+                    Stroke="#D8D8D8"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 4"
+                    Padding="14">
+                <Grid RowDefinitions="Auto, *">
+
+                    <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="0,0,0,10">
+                        <Label x:Name="ResultsHeaderLabel"
+                               Text="Результати пошуку"
+                               FontSize="15"
+                               FontAttributes="Bold"
+                               TextColor="#222222"
+                               VerticalOptions="Center" />
+
+                        <Label Grid.Column="1"
+                               x:Name="ResultsCountBadge"
+                               Text="Знайдено: 0"
+                               FontSize="12"
+                               TextColor="#555555"
+                               VerticalOptions="Center" />
+                    </Grid>
+
+                    <!-- Empty state -->
+                    <VerticalStackLayout Grid.Row="1"
+                                         x:Name="EmptyStateView"
+                                         VerticalOptions="Center"
+                                         HorizontalOptions="Center">
+                        <Label x:Name="EmptyStateMessageLabel"
+                               Text="Завантажте XML-файл для початку роботи."
+                               FontSize="14"
+                               TextColor="#666666"
+                               HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+
+                    <!-- Student cards -->
+                    <CollectionView Grid.Row="1"
+                                    x:Name="StudentsCollectionView"
+                                    IsVisible="False">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:DormitoryStudent">
+                                <Border BackgroundColor="#FAFAFA"
+                                        Stroke="#DCDCDC"
+                                        StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 4"
+                                        Padding="12,10"
+                                        Margin="0,0,0,8">
+                                    <VerticalStackLayout Spacing="4">
+
+                                        <Grid ColumnDefinitions="*, Auto" ColumnSpacing="8">
+                                            <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                                                <Label Text="{Binding FullName}"
+                                                       FontSize="14"
+                                                       FontAttributes="Bold"
+                                                       TextColor="#1A1A1A" />
+                                                <Label Text="{Binding Id, StringFormat='[{0}]'}"
+                                                       FontSize="12"
+                                                       TextColor="#666666"
+                                                       VerticalOptions="Center" />
+                                            </HorizontalStackLayout>
+
+                                            <Label Grid.Column="1"
+                                                   Text="{Binding Course, StringFormat='{0} курс'}"
+                                                   FontSize="12"
+                                                   TextColor="#444444"
+                                                   VerticalOptions="Center" />
+                                        </Grid>
+
+                                        <Label FontSize="12" TextColor="#333333">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="Факультет: " FontAttributes="Bold" />
+                                                    <Span Text="{Binding Faculty}" />
+                                                    <Span Text=" | Кафедра: " FontAttributes="Bold" />
+                                                    <Span Text="{Binding Department}" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+
+                                        <Label FontSize="12" TextColor="#333333">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="Місце: " FontAttributes="Bold" />
+                                                    <Span Text="{Binding Room.Building}" />
+                                                    <Span Text=", кімн. " />
+                                                    <Span Text="{Binding Room.RoomNumber}" />
+                                                    <Span Text=" (пов. " />
+                                                    <Span Text="{Binding Room.Floor}" />
+                                                    <Span Text=") | Період: " />
+                                                    <Span Text="{Binding Room.ResidencePeriod}" />
+                                                    <Span Text=" | Оплата: " />
+                                                    <Span Text="{Binding Room.MonthlyFee}" />
+                                                    <Span Text=" грн/міс" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+
+                                        <Label Text="{Binding ExtraDetails}"
+                                               IsVisible="{Binding HasExtraDetails}"
+                                               FontSize="11"
+                                               TextColor="#555555" />
+
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                </Grid>
+            </Border>
+
+        </Grid>
+
+    </Grid>
+</ContentPage>

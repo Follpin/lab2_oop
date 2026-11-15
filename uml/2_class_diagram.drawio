@@ -1,0 +1,174 @@
+<mxfile host="app.diagrams.net" modified="2026-10-29T22:12:00.000Z" agent="Mozilla/5.0" version="21.0.0" type="device">
+  <diagram id="class_diagram_lab2" name="Class Diagram">
+    <mxGraphModel dx="1600" dy="1050" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1880" pageHeight="1240" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title Banner -->
+        <mxCell id="title_banner" value="&lt;b&gt;Діаграма класів (Class Diagram) — Система «Гуртожиток» (Варіант 3: П.І.П., факультет, кафедра, курс, місце проживання з датами)&lt;/b&gt;&lt;br/&gt;3-рівнева архітектура з шаблоном проєктування Strategy (SAX, DOM, LINQ to XML) та усуненням антишаблону «Магічна кнопка» (Magic Pushbutton) | Виконав: Остапенко Роман, К-24" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fillColor=#e3f2fd;strokeColor=#2196f3;fontColor=#0d47a1;fontSize=14;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1780" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- 1. MainPage (UI Layer) -->
+        <mxCell id="class_mainpage" value="&amp;lt;&amp;lt;boundary / UI&amp;gt;&amp;gt;&#xa;&lt;b&gt;MainPage&lt;/b&gt;&#xa;extends ContentPage&#xa;----------------------------------------------------&#xa;- _dormitoryManager: DormitoryManager&#xa;- _currentXmlPath: string&#xa;- _currentXslPath: string&#xa;----------------------------------------------------&#xa;+ MainPage()&#xa;- OnLoadXmlClicked(sender: object, e: EventArgs): void&#xa;- OnLoadXslClicked(sender: object, e: EventArgs): void&#xa;- OnSearchClicked(sender: object, e: EventArgs): void&#xa;- OnTransformToHtmlClicked(sender: object, e: EventArgs): void&#xa;- OnClearClicked(sender: object, e: EventArgs): void&#xa;- OnHelpClicked(sender: object, e: EventArgs): void&#xa;- OnExitClicked(sender: object, e: EventArgs): void&#xa;- PopulateAttributePickers(attrs: Dictionary&amp;lt;string, List&amp;lt;string&amp;gt;&amp;gt;): void&#xa;- BuildFilterCriteria(): FilterCriteria&#xa;- GetSelectedStrategyType(): SearchStrategyType&#xa;- DisplayResults(students: IReadOnlyList&amp;lt;DormitoryStudent&amp;gt;): void&#xa;- ResetFilterControls(): void" style="html=1;whiteSpace=wrap;align=left;verticalAlign=top;fillColor=#dae8fc;strokeColor=#6c8ebf;fontFamily=Courier New;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="40" y="100" width="430" height="390" as="geometry" />
+        </mxCell>
+
+        <!-- 2. DormitoryManager (Application Controller / Facade) -->
+        <mxCell id="class_manager" value="&amp;lt;&amp;lt;controller / facade&amp;gt;&amp;gt;&#xa;&lt;b&gt;DormitoryManager&lt;/b&gt;&#xa;----------------------------------------------------&#xa;- _searchContext: XmlSearchContext&#xa;- _attributeExtractor: XmlAttributeExtractor&#xa;- _xsltService: XsltTransformService&#xa;----------------------------------------------------&#xa;+ DormitoryManager()&#xa;+ LoadAndExtractAttributes(xmlPath: string):&#xa;    Dictionary&amp;lt;string, List&amp;lt;string&amp;gt;&amp;gt;&#xa;+ SearchStudents(xmlPath: string, criteria: FilterCriteria,&#xa;    strategyType: SearchStrategyType):&#xa;    IReadOnlyList&amp;lt;DormitoryStudent&amp;gt;&#xa;+ TransformXmlToHtml(xmlPath: string, xslPath: string,&#xa;    outputHtmlPath: string): string&#xa;+ CreateStrategy(type: SearchStrategyType):&#xa;    IXmlSearchStrategy" style="html=1;whiteSpace=wrap;align=left;verticalAlign=top;fillColor=#d5e8d4;strokeColor=#82b366;fontFamily=Courier New;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="540" y="100" width="450" height="310" as="geometry" />
+        </mxCell>
+
+        <!-- 3. SearchStrategyType (Enum) -->
+        <mxCell id="enum_strategy" value="&amp;lt;&amp;lt;enumeration&amp;gt;&amp;gt;&#xa;&lt;b&gt;SearchStrategyType&lt;/b&gt;&#xa;--------------------------&#xa;Sax&#xa;Dom&#xa;Linq" style="html=1;whiteSpace=wrap;align=center;verticalAlign=top;fillColor=#fff2cc;strokeColor=#d6b656;fontFamily=Courier New;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="100" width="210" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- 4. XmlAttributeExtractor (Service for dynamic UI attribute loading) -->
+        <mxCell id="class_extractor" value="&amp;lt;&amp;lt;service / XML metadata&amp;gt;&amp;gt;&#xa;&lt;b&gt;XmlAttributeExtractor&lt;/b&gt;&#xa;----------------------------------------------------&#xa;+ ExtractUniqueAttributeValues(xmlPath: string):&#xa;    Dictionary&amp;lt;string, List&amp;lt;string&amp;gt;&amp;gt;&#xa;+ GetAvailableStudentAttributes(xmlPath: string):&#xa;    IReadOnlyList&amp;lt;string&amp;gt;" style="html=1;whiteSpace=wrap;align=left;verticalAlign=top;fillColor=#f8cecc;strokeColor=#b85450;fontFamily=Courier New;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="1340" y="100" width="480" height="135" as="geometry" />
+        </mxCell>
+
+        <!-- 5. XsltTransformService (Service for XML -> HTML via XSL) -->
+        <mxCell id="class_xslt" value="&amp;lt;&amp;lt;service / XSLT&amp;gt;&amp;gt;&#xa;&lt;b&gt;XsltTransformService&lt;/b&gt;&#xa;----------------------------------------------------&#xa;+ Transform(xmlPath: string, xslPath: string,&#xa;    outputHtmlPath: string): void&#xa;+ ValidateFiles(xmlPath: string, xslPath: string): void" style="html=1;whiteSpace=wrap;align=left;verticalAlign=top;fillColor=#f8cecc;strokeColor=#b85450;fontFamily=Courier New;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="1340" y="275" width="480" height="135" as="geometry" />
+        </mxCell>
+
+        <!-- 6. FilterCriteria (Query Object) -->
+        <mxCell id="class_criteria" value="&amp;lt;&amp;lt;query object&amp;gt;&amp;gt;&#xa;&lt;b&gt;FilterCriteria&lt;/b&gt;&#xa;----------------------------------------------------&#xa;+ FullNameKeyword: string? { get; set; }&#xa;+ Faculty: string? { get; set; }&#xa;+ Department: string? { get; set; }&#xa;+ Course: int? { get; set; }&#xa;+ Building: string? { get; set; }&#xa;+ RoomNumber: string? { get; set; }&#xa;+ Privilege: string? { get; set; }&#xa;+ CustomAttributeName: string? { get; set; }&#xa;+ CustomAttributeValue: string? { get; set; }&#xa;----------------------------------------------------&#xa;+ IsEmpty(): bool&#xa;+ Clear(): void" style="html=1;whiteSpace=wrap;align=left;verticalAlign=top;fillColor=#fff2cc;strokeColor=#d6b656;fontFamily=Courier New;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="40" y="555" width="430" height="275" as="geometry" />
+        </mxCell>
+
+        <!-- 7. XmlSearchContext (Strategy Context) -->
+        <mxCell id="class_context" value="&amp;lt;&amp;lt;context / Strategy Pattern&amp;gt;&amp;gt;&#xa;&lt;b&gt;XmlSearchContext&lt;/b&gt;&#xa;----------------------------------------------------&#xa;- _strategy: IXmlSearchStrategy&#xa;----------------------------------------------------&#xa;+ CurrentStrategy: IXmlSearchStrategy { get; }&#xa;+ XmlSearchContext(strategy: IXmlSearchStrategy)&#xa;+ SetStrategy(strategy: IXmlSearchStrategy): void&#xa;+ ExecuteSearch(xmlPath: string, criteria: FilterCriteria):&#xa;    IReadOnlyList&amp;lt;DormitoryStudent&amp;gt;" style="html=1;whiteSpace=wrap;align=left;verticalAlign=top;fillColor=#d5e8d4;strokeColor=#82b366;fontFamily=Courier New;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="540" y="480" width="450" height="190" as="geometry" />
+        </mxCell>
+
+        <!-- 8. IXmlSearchStrategy (Strategy Interface) -->
+        <mxCell id="interface_strategy" value="&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&#xa;&lt;b&gt;IXmlSearchStrategy&lt;/b&gt;&#xa;----------------------------------------------------&#xa;+ StrategyName: string { get; }&#xa;+ Search(xmlPath: string, criteria: FilterCriteria):&#xa;    IReadOnlyList&amp;lt;DormitoryStudent&amp;gt;" style="html=1;whiteSpace=wrap;align=left;verticalAlign=top;fillColor=#fff2cc;strokeColor=#d6b656;fontFamily=Courier New;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="1150" y="480" width="460" height="135" as="geometry" />
+        </mxCell>
+
+        <!-- 9. DormitoryStudent (Domain Entity) -->
+        <mxCell id="class_student" value="&amp;lt;&amp;lt;entity / model&amp;gt;&amp;gt;&#xa;&lt;b&gt;DormitoryStudent&lt;/b&gt;&#xa;----------------------------------------------------&#xa;+ Id: string { get; set; }&#xa;+ FullName: string { get; set; }&#xa;+ Faculty: string { get; set; }&#xa;+ Department: string { get; set; }&#xa;+ Course: int { get; set; }&#xa;+ Privilege: string? { get; set; }&#xa;+ Phone: string? { get; set; }&#xa;+ Room: RoomInfo { get; set; }&#xa;+ AdditionalAttributes: Dictionary&amp;lt;string, string&amp;gt; { get; set; }&#xa;----------------------------------------------------&#xa;+ HasAttribute(name: string, value: string): bool&#xa;+ FormatDisplayBlock(): string" style="html=1;whiteSpace=wrap;align=left;verticalAlign=top;fillColor=#d5e8d4;strokeColor=#82b366;fontFamily=Courier New;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="40" y="890" width="430" height="290" as="geometry" />
+        </mxCell>
+
+        <!-- 10. RoomInfo (Nested Value Object - Level 2 XML Hierarchy) -->
+        <mxCell id="class_room" value="&amp;lt;&amp;lt;value object / XML Level 2&amp;gt;&amp;gt;&#xa;&lt;b&gt;RoomInfo&lt;/b&gt;&#xa;----------------------------------------------------&#xa;+ Building: string { get; set; }&#xa;+ Floor: int { get; set; }&#xa;+ RoomNumber: string { get; set; }&#xa;+ CheckInDate: string { get; set; }&#xa;+ CheckOutDate: string? { get; set; }&#xa;+ MonthlyFee: decimal { get; set; }&#xa;----------------------------------------------------&#xa;+ FormatResidencePeriod(): string" style="html=1;whiteSpace=wrap;align=left;verticalAlign=top;fillColor=#d5e8d4;strokeColor=#82b366;fontFamily=Courier New;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="540" y="915" width="360" height="240" as="geometry" />
+        </mxCell>
+
+        <!-- 11. SaxXmlSearchStrategy (Concrete Strategy 1) -->
+        <mxCell id="class_sax" value="&amp;lt;&amp;lt;strategy / SAX API&amp;gt;&amp;gt;&#xa;&lt;b&gt;SaxXmlSearchStrategy&lt;/b&gt;&#xa;implements IXmlSearchStrategy&#xa;-------------------------------------&#xa;+ StrategyName: string = &quot;SAX (XmlReader)&quot;&#xa;-------------------------------------&#xa;+ Search(xmlPath: string,&#xa;    criteria: FilterCriteria):&#xa;    IReadOnlyList&amp;lt;DormitoryStudent&amp;gt;&#xa;- ReadStudentNode(reader: XmlReader):&#xa;    DormitoryStudent&#xa;- MatchesCriteria(student:&#xa;    DormitoryStudent,&#xa;    criteria: FilterCriteria): bool" style="html=1;whiteSpace=wrap;align=left;verticalAlign=top;fillColor=#e1d5e7;strokeColor=#9673a6;fontFamily=Courier New;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="940" y="720" width="280" height="260" as="geometry" />
+        </mxCell>
+
+        <!-- 12. DomXmlSearchStrategy (Concrete Strategy 2) -->
+        <mxCell id="class_dom" value="&amp;lt;&amp;lt;strategy / DOM API&amp;gt;&amp;gt;&#xa;&lt;b&gt;DomXmlSearchStrategy&lt;/b&gt;&#xa;implements IXmlSearchStrategy&#xa;-------------------------------------&#xa;+ StrategyName: string = &quot;DOM (XmlDocument)&quot;&#xa;-------------------------------------&#xa;+ Search(xmlPath: string,&#xa;    criteria: FilterCriteria):&#xa;    IReadOnlyList&amp;lt;DormitoryStudent&amp;gt;&#xa;- BuildXPathQuery(criteria:&#xa;    FilterCriteria): string&#xa;- MapXmlNodeToStudent(node: XmlNode):&#xa;    DormitoryStudent" style="html=1;whiteSpace=wrap;align=left;verticalAlign=top;fillColor=#e1d5e7;strokeColor=#9673a6;fontFamily=Courier New;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="720" width="280" height="260" as="geometry" />
+        </mxCell>
+
+        <!-- 13. LinqXmlSearchStrategy (Concrete Strategy 3) -->
+        <mxCell id="class_linq" value="&amp;lt;&amp;lt;strategy / LINQ to XML&amp;gt;&amp;gt;&#xa;&lt;b&gt;LinqXmlSearchStrategy&lt;/b&gt;&#xa;implements IXmlSearchStrategy&#xa;-------------------------------------&#xa;+ StrategyName: string = &quot;LINQ (XDocument)&quot;&#xa;-------------------------------------&#xa;+ Search(xmlPath: string,&#xa;    criteria: FilterCriteria):&#xa;    IReadOnlyList&amp;lt;DormitoryStudent&amp;gt;&#xa;- MatchesXElement(el: XElement,&#xa;    criteria: FilterCriteria): bool&#xa;- MapXElementToStudent(el: XElement):&#xa;    DormitoryStudent" style="html=1;whiteSpace=wrap;align=left;verticalAlign=top;fillColor=#e1d5e7;strokeColor=#9673a6;fontFamily=Courier New;fontSize=11;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="1540" y="720" width="280" height="260" as="geometry" />
+        </mxCell>
+
+        <!-- Architectural Note -->
+        <mxCell id="note_arch" value="&lt;b&gt;Архітектурні рішення (відповідність вимогам Лабораторної роботи №2):&lt;/b&gt;&lt;br/&gt;1. &lt;b&gt;Усунення «Магічної кнопки» (Magic Pushbutton):&lt;/b&gt; Клас &lt;code&gt;MainPage&lt;/code&gt; не імпортує та не викликає напряму &lt;code&gt;XmlReader&lt;/code&gt;, &lt;code&gt;XmlDocument&lt;/code&gt;, &lt;code&gt;XDocument&lt;/code&gt; чи &lt;code&gt;XslCompiledTransform&lt;/code&gt;. Усі операції делегуються контролеру &lt;code&gt;DormitoryManager&lt;/code&gt;.&lt;br/&gt;2. &lt;b&gt;Шаблон проєктування Strategy:&lt;/b&gt; &lt;code&gt;XmlSearchContext&lt;/code&gt; інкапсулює змінний алгоритм пошуку через інтерфейс &lt;code&gt;IXmlSearchStrategy&lt;/code&gt; (&lt;code&gt;SaxXmlSearchStrategy&lt;/code&gt;, &lt;code&gt;DomXmlSearchStrategy&lt;/code&gt;, &lt;code&gt;LinqXmlSearchStrategy&lt;/code&gt;), що дозволяє перемикати спосіб аналізу XML у реальному часі.&lt;br/&gt;3. &lt;b&gt;Підтримка різної кількості атрибутів:&lt;/b&gt; &lt;code&gt;DormitoryStudent.AdditionalAttributes&lt;/code&gt; та &lt;code&gt;XmlAttributeExtractor&lt;/code&gt; опрацьовують вузли &lt;code&gt;&amp;lt;Student&amp;gt;&lt;/code&gt; із довільним набором додаткових атрибутів." style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="940" y="1030" width="880" height="150" as="geometry" />
+        </mxCell>
+
+        <!-- RELATIONSHIPS -->
+
+        <!-- 1. MainPage -> DormitoryManager (Association 1..1) -->
+        <mxCell id="rel_ui_mgr" value="1          1" style="endArrow=open;endSize=10;html=1;rounded=0;strokeWidth=1.5;strokeColor=#333333;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.3;entryDx=0;entryDy=0;" edge="1" parent="1" source="class_mainpage" target="class_manager">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 2. MainPage ..> FilterCriteria (Creates) -->
+        <mxCell id="rel_ui_criteria" value="&amp;lt;&amp;lt;creates&amp;gt;&amp;gt;" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;strokeWidth=1.5;strokeColor=#666666;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="class_mainpage" target="class_criteria">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 3. DormitoryManager *-> XmlSearchContext (Composition) -->
+        <mxCell id="rel_mgr_ctx" value="1          1" style="endArrow=open;endSize=10;startArrow=diamondThin;startFill=1;startSize=14;html=1;rounded=0;strokeWidth=1.5;strokeColor=#2b5b84;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="class_manager" target="class_context">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 4. DormitoryManager ..> SearchStrategyType (Uses) -->
+        <mxCell id="rel_mgr_enum" value="&amp;lt;&amp;lt;uses&amp;gt;&amp;gt;" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;strokeWidth=1.5;strokeColor=#666666;exitX=1;exitY=0.2;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="class_manager" target="enum_strategy">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 5. DormitoryManager *-> XmlAttributeExtractor (Composition) -->
+        <mxCell id="rel_mgr_ext" value="1" style="endArrow=open;endSize=10;startArrow=diamondThin;startFill=1;startSize=14;html=1;rounded=0;strokeWidth=1.5;strokeColor=#b85450;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="class_manager" target="class_extractor">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1300" y="255" />
+              <mxPoint x="1300" y="168" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 6. DormitoryManager *-> XsltTransformService (Composition) -->
+        <mxCell id="rel_mgr_xslt" value="1" style="endArrow=open;endSize=10;startArrow=diamondThin;startFill=1;startSize=14;html=1;rounded=0;strokeWidth=1.5;strokeColor=#b85450;exitX=1;exitY=0.78;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="class_manager" target="class_xslt">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 7. XmlSearchContext o-> IXmlSearchStrategy (Aggregation) -->
+        <mxCell id="rel_ctx_strat" value="1          1" style="endArrow=open;endSize=10;startArrow=diamondThin;startFill=0;startSize=14;html=1;rounded=0;strokeWidth=1.5;strokeColor=#2e7d32;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="class_context" target="interface_strategy">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 8. SaxXmlSearchStrategy ..|> IXmlSearchStrategy (Realization) -->
+        <mxCell id="rel_sax_impl" style="endArrow=block;endFill=0;endSize=12;dashed=1;html=1;rounded=0;strokeWidth=1.5;strokeColor=#7b1fa2;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="class_sax" target="interface_strategy">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1080" y="665" />
+              <mxPoint x="1265" y="665" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 9. DomXmlSearchStrategy ..|> IXmlSearchStrategy (Realization) -->
+        <mxCell id="rel_dom_impl" style="endArrow=block;endFill=0;endSize=12;dashed=1;html=1;rounded=0;strokeWidth=1.5;strokeColor=#7b1fa2;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="class_dom" target="interface_strategy">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 10. LinqXmlSearchStrategy ..|> IXmlSearchStrategy (Realization) -->
+        <mxCell id="rel_linq_impl" style="endArrow=block;endFill=0;endSize=12;dashed=1;html=1;rounded=0;strokeWidth=1.5;strokeColor=#7b1fa2;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="class_linq" target="interface_strategy">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1680" y="665" />
+              <mxPoint x="1495" y="665" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 11. XmlSearchContext ..> FilterCriteria (Uses) -->
+        <mxCell id="rel_ctx_criteria" value="&amp;lt;&amp;lt;uses&amp;gt;&amp;gt;" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;strokeWidth=1.5;strokeColor=#666666;exitX=0;exitY=0.65;exitDx=0;exitDy=0;entryX=1;entryY=0.2;entryDx=0;entryDy=0;" edge="1" parent="1" source="class_context" target="class_criteria">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 12. XmlSearchContext ..> DormitoryStudent (Returns) -->
+        <mxCell id="rel_ctx_student" value="&amp;lt;&amp;lt;returns&amp;gt;&amp;gt;" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;strokeWidth=1.5;strokeColor=#2e7d32;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.15;entryDx=0;entryDy=0;" edge="1" parent="1" source="class_context" target="class_student">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="652" y="860" />
+              <mxPoint x="505" y="860" />
+              <mxPoint x="505" y="934" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- 13. DormitoryStudent *-> RoomInfo (Composition 1..1) -->
+        <mxCell id="rel_student_room" value="1          1" style="endArrow=open;endSize=10;startArrow=diamondThin;startFill=1;startSize=14;html=1;rounded=0;strokeWidth=1.5;strokeColor=#2b5b84;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="class_student" target="class_room">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

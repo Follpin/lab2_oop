@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DormitoryDatabase University="Київський національний університет імені Тараса Шевченка" AcademicYear="2026/2027">
+  <!-- Student 1: Base attributes + Phone + Privilege + Scholarship (8 attributes) -->
+  <Student Id="ST-001" FullName="Остапенко Роман Ігорович" Faculty="ФКНК" Department="Кібернетика" Course="2" Phone="+380671112233" Privilege="ВПО" Scholarship="Академічна">
+    <Room Building="Корпус 1" Floor="4" RoomNumber="412" CheckInDate="2025-08-31" CheckOutDate="2026-06-30" MonthlyFee="1200.00">
+      <PaymentHistory>
+        <Payment Date="2025-09-01" Amount="1200.00" Status="Оплачено" />
+        <Payment Date="2025-10-01" Amount="1200.00" Status="Оплачено" />
+      </PaymentHistory>
+    </Room>
+  </Student>
+
+  <!-- Student 2: Required attributes only (5 attributes) -->
+  <Student Id="ST-002" FullName="Коваленко Дарина Петрівна" Faculty="ФКНК" Department="Системний аналіз" Course="3">
+    <Room Building="Корпус 1" Floor="3" RoomNumber="305" CheckInDate="2025-08-30" CheckOutDate="2026-06-30" MonthlyFee="1200.00">
+      <PaymentHistory>
+        <Payment Date="2025-09-02" Amount="1200.00" Status="Оплачено" />
+      </PaymentHistory>
+    </Room>
+  </Student>
+
+  <!-- Student 3: Base + Phone + HasDebt (7 attributes) -->
+  <Student Id="ST-003" FullName="Шевченко Богдан Юрійович" Faculty="ФІТ" Department="Комп'ютерні науки" Course="1" Phone="+380504445566" HasDebt="True">
+    <Room Building="Корпус 2" Floor="2" RoomNumber="214" CheckInDate="2025-09-01" CheckOutDate="2026-06-30" MonthlyFee="1100.00">
+      <PaymentHistory>
+        <Payment Date="2025-09-05" Amount="1100.00" Status="Оплачено" />
+      </PaymentHistory>
+    </Room>
+  </Student>
+
+  <!-- Student 4: Base + Privilege + Notes (7 attributes) -->
+  <Student Id="ST-004" FullName="Мельник Софія Тарасівна" Faculty="ФІТ" Department="Програмна інженерія" Course="4" Privilege="УБД" Notes="Староста поверху">
+    <Room Building="Корпус 2" Floor="5" RoomNumber="501" CheckInDate="2025-08-28" CheckOutDate="2026-06-30" MonthlyFee="1100.00">
+      <PaymentHistory>
+        <Payment Date="2025-09-01" Amount="1100.00" Status="Оплачено" />
+      </PaymentHistory>
+    </Room>
+  </Student>
+
+  <!-- Student 5: Required attributes only (5 attributes) -->
+  <Student Id="ST-005" FullName="Ткаченко Владислав Олегович" Faculty="ФРЕКС" Department="Радіофізика" Course="2">
+    <Room Building="Корпус 3" Floor="1" RoomNumber="108" CheckInDate="2025-09-01" CheckOutDate="2026-06-30" MonthlyFee="950.00">
+      <PaymentHistory>
+        <Payment Date="2025-09-03" Amount="950.00" Status="Оплачено" />
+      </PaymentHistory>
+    </Room>
+  </Student>
+
+  <!-- Student 6: Base + Phone + Privilege + Notes (8 attributes) -->
+  <Student Id="ST-006" FullName="Бондаренко Анастасія Вікторівна" Faculty="ФРЕКС" Department="Електроніка" Course="3" Phone="+380937778899" Privilege="Сирота" Notes="Звільнена від оплати">
+    <Room Building="Корпус 3" Floor="3" RoomNumber="315" CheckInDate="2025-08-29" CheckOutDate="2026-06-30" MonthlyFee="0.00">
+      <PaymentHistory />
+    </Room>
+  </Student>
+
+  <!-- Student 7: Base + Phone (6 attributes) -->
+  <Student Id="ST-007" FullName="Кравченко Артем Миколайович" Faculty="МехМат" Department="Математика" Course="1" Phone="+380632223344">
+    <Room Building="Корпус 1" Floor="2" RoomNumber="204" CheckInDate="2025-09-02" CheckOutDate="2026-06-30" MonthlyFee="1200.00">
+      <PaymentHistory>
+        <Payment Date="2025-09-04" Amount="1200.00" Status="Оплачено" />
+      </PaymentHistory>
+    </Room>
+  </Student>
+
+  <!-- Student 8: Base + Privilege (6 attributes) -->
+  <Student Id="ST-008" FullName="Григоренко Олена Василівна" Faculty="МехМат" Department="Диференціальні рівняння" Course="4" Privilege="Чорнобилець">
+    <Room Building="Корпус 1" Floor="5" RoomNumber="510" CheckInDate="2025-08-30" CheckOutDate="2026-06-30" MonthlyFee="600.00">
+      <PaymentHistory>
+        <Payment Date="2025-09-01" Amount="600.00" Status="Оплачено" />
+      </PaymentHistory>
+    </Room>
+  </Student>
+
+  <!-- Student 9: Base + Phone + HasDebt + Scholarship + Notes (10 attributes) -->
+  <Student Id="ST-009" FullName="Поліщук Іван Сергійович" Faculty="ФКНК" Department="Кібернетика" Course="3" Phone="+380998887766" HasDebt="False" Scholarship="Підвищена" Notes="Заступник голови ради гуртожитку">
+    <Room Building="Корпус 1" Floor="4" RoomNumber="412" CheckInDate="2025-08-31" CheckOutDate="2026-06-30" MonthlyFee="1200.00">
+      <PaymentHistory>
+        <Payment Date="2025-09-01" Amount="1200.00" Status="Оплачено" />
+      </PaymentHistory>
+    </Room>
+  </Student>
+
+  <!-- Student 10: Required attributes only (5 attributes) -->
+  <Student Id="ST-010" FullName="Мороз Катерина Олександрівна" Faculty="ФІТ" Department="Інформаційні технології" Course="2">
+    <Room Building="Корпус 2" Floor="3" RoomNumber="320" CheckInDate="2025-09-01" CheckOutDate="2026-06-30" MonthlyFee="1100.00">
+      <PaymentHistory>
+        <Payment Date="2025-09-02" Amount="1100.00" Status="Оплачено" />
+      </PaymentHistory>
+    </Room>
+  </Student>
+</DormitoryDatabase>

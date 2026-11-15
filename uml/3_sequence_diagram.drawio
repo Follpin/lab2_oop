@@ -1,0 +1,303 @@
+<mxfile host="app.diagrams.net" modified="2026-10-29T22:14:00.000Z" agent="Mozilla/5.0" version="21.0.0" type="device">
+  <diagram id="sequence_diagram_lab2" name="Sequence Diagram">
+    <mxGraphModel dx="1600" dy="1050" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1720" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title Banner -->
+        <mxCell id="seq_title" value="&lt;b&gt;Діаграма послідовності (Sequence Diagram) — Система «Гуртожиток» (Варіант 3)&lt;/b&gt;&lt;br/&gt;Сценарії: Підвантаження атрибутів XML &amp;rarr; Пошук через шаблон Strategy (SAX / DOM / LINQ) &amp;rarr; XSLT-трансформація в HTML &amp;rarr; Очищення (Clear) та Вихід | Виконав: Остапенко Роман, К-24" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fillColor=#e3f2fd;strokeColor=#2196f3;fontColor=#0d47a1;fontSize=13;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1620" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Lifelines -->
+        <!-- 1. User (center x = 85) -->
+        <mxCell id="ll_user" value="Користувач&#xa;(Комендант)" style="shape=umlLifeline;participant=umlActor;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;fontStyle=1;fontSize=12;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="50" y="95" width="70" height="1060" as="geometry" />
+        </mxCell>
+
+        <!-- 2. MainPage (center x = 250) -->
+        <mxCell id="ll_ui" value=":MainPage&#xa;&amp;lt;&amp;lt;boundary / UI&amp;gt;&amp;gt;" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;fontStyle=1;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="185" y="95" width="130" height="1060" as="geometry" />
+        </mxCell>
+
+        <!-- 3. DormitoryManager (center x = 455) -->
+        <mxCell id="ll_mgr" value=":DormitoryManager&#xa;&amp;lt;&amp;lt;controller / facade&amp;gt;&amp;gt;" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;fontStyle=1;fontSize=12;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="380" y="95" width="150" height="1060" as="geometry" />
+        </mxCell>
+
+        <!-- 4. XmlAttributeExtractor (center x = 675) -->
+        <mxCell id="ll_ext" value=":XmlAttributeExtractor&#xa;&amp;lt;&amp;lt;service&amp;gt;&amp;gt;" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;fontStyle=1;fontSize=12;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="595" y="95" width="160" height="1060" as="geometry" />
+        </mxCell>
+
+        <!-- 5. XmlSearchContext (center x = 895) -->
+        <mxCell id="ll_ctx" value=":XmlSearchContext&#xa;&amp;lt;&amp;lt;context&amp;gt;&amp;gt;" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;fontStyle=1;fontSize=12;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="820" y="95" width="150" height="1060" as="geometry" />
+        </mxCell>
+
+        <!-- 6. IXmlSearchStrategy (center x = 1120) -->
+        <mxCell id="ll_strat" value="strategy : IXmlSearchStrategy&#xa;&amp;lt;&amp;lt;SAX / DOM / LINQ&amp;gt;&amp;gt;" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;fontStyle=1;fontSize=12;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="1030" y="95" width="180" height="1060" as="geometry" />
+        </mxCell>
+
+        <!-- 7. XsltTransformService (center x = 1350) -->
+        <mxCell id="ll_xslt" value=":XsltTransformService&#xa;&amp;lt;&amp;lt;XSLT service&amp;gt;&amp;gt;" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;fontStyle=1;fontSize=12;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="1270" y="95" width="160" height="1060" as="geometry" />
+        </mxCell>
+
+        <!-- 8. File System (center x = 1575) -->
+        <mxCell id="ll_fs" value="Файлова система&#xa;(dormitory.xml / .xsl / .html)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;fontStyle=1;fontSize=12;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="1490" y="95" width="170" height="1060" as="geometry" />
+        </mxCell>
+
+        <!-- ================= SECTION A: LOAD XML & DYNAMIC ATTRIBUTE EXTRACTION ================= -->
+
+        <mxCell id="msg_1" value="1: Натискання &quot;Завантажити XML&quot; (OnLoadXmlClicked)" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;strokeWidth=1.5;strokeColor=#333333;fontStyle=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="85" y="165" as="sourcePoint" />
+            <mxPoint x="250" y="165" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="msg_2" value="2: LoadAndExtractAttributes(&quot;dormitory.xml&quot;)" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;strokeWidth=1.5;strokeColor=#2b5b84;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="250" y="195" as="sourcePoint" />
+            <mxPoint x="455" y="195" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="msg_3" value="3: ExtractUniqueAttributeValues(&quot;dormitory.xml&quot;)" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;strokeWidth=1.5;strokeColor=#b85450;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="455" y="225" as="sourcePoint" />
+            <mxPoint x="675" y="225" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="msg_4" value="4: Сканування вузлів &lt;Student&gt; (з різною кількістю атрибутів) та &lt;Room&gt;" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;strokeWidth=1.2;strokeColor=#333333;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="675" y="255" as="sourcePoint" />
+            <mxPoint x="1575" y="255" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="msg_4_ret" value="return Потік XML-даних" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;rounded=0;strokeColor=#666666;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1575" y="280" as="sourcePoint" />
+            <mxPoint x="675" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="msg_3_ret" value="return Dictionary&lt;string, List&lt;string&gt;&gt; (Faculty, Department, Course, Building, Privilege...)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;rounded=0;strokeColor=#b85450;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="675" y="305" as="sourcePoint" />
+            <mxPoint x="455" y="305" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="msg_2_ret" value="return uniqueAttributes" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;rounded=0;strokeColor=#2b5b84;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="455" y="330" as="sourcePoint" />
+            <mxPoint x="250" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="msg_5" value="5: PopulateAttributePickers() — динамічне підвантаження даних у списки UI" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;rounded=0;strokeWidth=1.5;strokeColor=#2e7d32;fontColor=#2e7d32;fontStyle=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="250" y="355" as="sourcePoint" />
+            <mxPoint x="85" y="355" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ================= SECTION B: SEARCH VIA STRATEGY PATTERN (SAX / DOM / LINQ) ================= -->
+
+        <mxCell id="msg_6" value="6: Вибір фільтрів, стратегії (SAX / DOM / LINQ) та натискання &quot;Пошук&quot; (OnSearchClicked)" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;strokeWidth=1.5;strokeColor=#b85450;fontColor=#b85450;fontStyle=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="85" y="395" as="sourcePoint" />
+            <mxPoint x="250" y="395" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="msg_7" value="7: BuildFilterCriteria() + GetSelectedStrategyType()" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;strokeWidth=1.2;strokeColor=#666666;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="290" y="415" />
+              <mxPoint x="290" y="435" />
+            </Array>
+            <mxPoint x="250" y="415" as="sourcePoint" />
+            <mxPoint x="250" y="435" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="msg_8" value="8: SearchStudents(xmlPath, criteria, strategyType) [Делегування: UI без бізнес-логіки]" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;strokeWidth=1.5;strokeColor=#2e7d32;fontColor=#2e7d32;fontStyle=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="250" y="460" as="sourcePoint" />
+            <mxPoint x="455" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Frame: Alt Strategy Selection -->
+        <mxCell id="frame_alt_strat" value="alt [Ініціалізація обраної стратегії (Strategy Pattern)]" style="shape=umlFrame;whiteSpace=wrap;html=1;width=290;height=24;boundedLbl=1;verticalAlign=top;align=left;spacingLeft=5;fillColor=none;strokeColor=#7b1fa2;strokeWidth=1.5;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="415" y="480" width="765" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="msg_9" value="9: CreateStrategy(strategyType) &amp;rarr; SaxXmlSearchStrategy | DomXmlSearchStrategy | LinqXmlSearchStrategy" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;strokeWidth=1.3;strokeColor=#7b1fa2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="455" y="520" as="sourcePoint" />
+            <mxPoint x="1120" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="msg_10" value="10: SetStrategy(strategy)" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;strokeWidth=1.5;strokeColor=#2b5b84;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="455" y="555" as="sourcePoint" />
+            <mxPoint x="895" y="555" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="msg_11" value="11: ExecuteSearch(xmlPath, criteria)" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;strokeWidth=1.5;strokeColor=#2b5b84;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="455" y="595" as="sourcePoint" />
+            <mxPoint x="895" y="595" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="msg_12" value="12: Search(xmlPath, criteria)" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;strokeWidth=1.5;strokeColor=#7b1fa2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="895" y="620" as="sourcePoint" />
+            <mxPoint x="1120" y="620" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Frame: Loop over XML Student nodes -->
+        <mxCell id="frame_loop_nodes" value="loop [Для кожного вузла &lt;Student&gt; та дочірнього &lt;Room&gt;]" style="shape=umlFrame;whiteSpace=wrap;html=1;width=310;height=24;boundedLbl=1;verticalAlign=top;align=left;spacingLeft=5;fillColor=none;strokeColor=#555555;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="635" width="600" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="msg_13" value="13: Розбір XML (XmlReader / XmlDocument+XPath / XDocument+LINQ)" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;strokeWidth=1.2;strokeColor=#333333;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1120" y="675" as="sourcePoint" />
+            <mxPoint x="1575" y="675" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="msg_13_ret" value="return Відфільтровані вузли &lt;Student&gt; за FilterCriteria" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;rounded=0;strokeColor=#666666;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1575" y="700" as="sourcePoint" />
+            <mxPoint x="1120" y="700" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="msg_12_ret" value="return IReadOnlyList&lt;DormitoryStudent&gt;" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;rounded=0;strokeWidth=1.2;strokeColor=#7b1fa2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1120" y="735" as="sourcePoint" />
+            <mxPoint x="895" y="735" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="msg_11_ret" value="return matchedStudents" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;rounded=0;strokeWidth=1.2;strokeColor=#2b5b84;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="895" y="760" as="sourcePoint" />
+            <mxPoint x="455" y="760" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="msg_8_ret" value="return matchedStudents" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;rounded=0;strokeWidth=1.5;strokeColor=#2e7d32;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="455" y="785" as="sourcePoint" />
+            <mxPoint x="250" y="785" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="msg_14" value="14: DisplayResults(matchedStudents) — відображення списку студентів у UI" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;rounded=0;strokeWidth=1.5;strokeColor=#333333;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="250" y="810" as="sourcePoint" />
+            <mxPoint x="85" y="810" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ================= SECTION C: XSLT TRANSFORMATION TO HTML ================= -->
+
+        <mxCell id="msg_15" value="15: Натискання &quot;Трансформувати в HTML&quot; (OnTransformToHtmlClicked)" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;strokeWidth=1.5;strokeColor=#333333;fontStyle=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="85" y="850" as="sourcePoint" />
+            <mxPoint x="250" y="850" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="msg_16" value="16: TransformXmlToHtml(xmlPath, xslPath, outputHtmlPath)" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;strokeWidth=1.5;strokeColor=#2b5b84;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="250" y="875" as="sourcePoint" />
+            <mxPoint x="455" y="875" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="msg_17" value="17: Transform(xmlPath, xslPath, outputHtmlPath) [XslCompiledTransform]" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;strokeWidth=1.5;strokeColor=#b85450;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="455" y="900" as="sourcePoint" />
+            <mxPoint x="1350" y="900" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="msg_18" value="18: Застосування dormitory.xsl та запис dormitory_report.html" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;strokeWidth=1.2;strokeColor=#333333;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1350" y="925" as="sourcePoint" />
+            <mxPoint x="1575" y="925" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="msg_17_ret" value="return outputHtmlPath" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;rounded=0;strokeColor=#b85450;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1350" y="950" as="sourcePoint" />
+            <mxPoint x="455" y="950" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="msg_16_ret" value="return outputHtmlPath" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;rounded=0;strokeColor=#2b5b84;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="455" y="975" as="sourcePoint" />
+            <mxPoint x="250" y="975" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="msg_19" value="19: Повідомлення про збереження HTML-звіту" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;rounded=0;strokeWidth=1.5;strokeColor=#2e7d32;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="250" y="1000" as="sourcePoint" />
+            <mxPoint x="85" y="1000" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ================= SECTION D: CLEAR & EXIT WITH CONFIRMATION ================= -->
+
+        <mxCell id="msg_20" value="20: Натискання &quot;Очистити (Clear)&quot; (OnClearClicked) &amp;rarr; ResetFilterControls()" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;strokeWidth=1.5;strokeColor=#333333;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="85" y="1040" as="sourcePoint" />
+            <mxPoint x="250" y="1040" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="msg_21" value="21: Натискання &quot;Вихід&quot; (OnExitClicked)" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;strokeWidth=1.5;strokeColor=#b85450;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="85" y="1075" as="sourcePoint" />
+            <mxPoint x="250" y="1075" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="msg_22" value="22: DisplayAlert(&quot;Чи дійсно ви хочете завершити роботу з програмою?&quot;, &quot;Так&quot;, &quot;Ні&quot;)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;rounded=0;strokeWidth=1.5;strokeColor=#b85450;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="250" y="1105" as="sourcePoint" />
+            <mxPoint x="85" y="1105" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="msg_23" value="23: Підтвердження (&quot;Так&quot;) &amp;rarr; Application.Current.Quit()" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;strokeWidth=1.5;strokeColor=#333333;fontStyle=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="85" y="1135" as="sourcePoint" />
+            <mxPoint x="250" y="1135" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
